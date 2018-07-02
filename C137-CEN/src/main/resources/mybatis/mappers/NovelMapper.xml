@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sum.cen.mapper.NovelMapper">
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="sum.cen.entity.Novel" >
+	<result column="id" property="id"/>
+	<result column="name" property="name"/>
+	<result column="url" property="url"/>
+	<result column="tag" property="tag"/>
+	<result column="user_no" property="user_no"/>
+	<result column="message" property="message"/>
+	<result column="pic" property="pic"/>
+	<result column="create_time" property="create_time"/>
+	<result column="update_time" property="update_time"/>
+</resultMap>
+<!-- 扩展字段 子菜单数量 -->
+   <resultMap  id="ExtResultMap" extends="BaseResultMap" type="sum.cen.entity.Novel">
+     <result column="subCount" property="subCount"/>
+   </resultMap>
+   
+   
+<!-- sys_user table all fields -->
+ <sql id="Base_Column_List">
+  id,name,url,tag,user_no,message,pic,create_time,update_time
+ </sql>
+
+<!-- 查询条件 -->	
+<sql id="Example_Where_Clause">
+	    where 1=1
+<trim suffixOverrides=",">
+   
+   <if test="name !=null and name !=''">
+      and name like concat('%', #{name}, '%')
+   </if>
+    <if test="url !=null" >
+      and url=#{url}
+    </if>
+   <if test="tag !=null and tag!=''">
+     and tag like concat('%',#{tag},'%')
+   </if>
+   <if test="user_no != null" >
+	    and user_no =  #{user_no}
+	</if>
+	<if test="message != null" >
+	    and message =  #{message}
+	</if>
+	<if test="pic != null" >
+	    and pic =  #{pic}
+	</if>
+	<if test="create_time != null" >
+	    and create_time =  #{create_time}
+	</if>
+	<if test="update_time != null" >
+	    and update_time =  #{update_time}
+	</if>
+   </trim>	
+</sql>
+  <!-- 插入记录 -->
+  <insert id="add" parameterType="Object">
+  insert into sp_novel(name,url,tag,user_no,message,pic)
+ values(#{name},#{url},#{tag},#{user_no},#{message},#{pic})
+</insert>
+<!-- 根据id，修改记录--> 
+<update id="update" parameterType="Object">
+     update sp_novel set name=#{name},url=#{url},tag=#{tag},user_no=#{user_no},message=#{message},pic=#{pic},update_time=now() where id=#{id}
+</update>
+<!-- 删除用户 -->
+<delete id="delete" parameterType="Object">
+   delete from sp_novel where id=#{id}
+</delete>
+ <!-- 修改记录，只修改只不为空的字段 -->
+ <update id="updateBySelective" parameterType="Object">
+    update sp_novel set 
+	<trim  suffixOverrides="," >
+	<if test="name != null  and name != '' ">
+		name=#{name},
+	</if>
+	<if test="url != null  and url != '' ">
+		url=#{url},
+	</if>
+	<if test="tag != null  and tag != '' ">
+		tag=#{tag},
+	</if>
+	<if test="user_no != null  and user_no !=''">
+		user_no=#{user_no},
+	</if>
+	<if test="message != null  and  message !=''">
+		message=#{message},
+	</if>
+	<if test="pic != null  ">
+		pic=#{pic},
+	</if>
+	
+	<if test="createTime != null  ">
+		create_time=#{create_time},
+	</if>
+	<if test="updateTime != null  ">
+		update_time=#{update_time},
+	</if>
+	</trim>
+	 where id=#{id}
+ 
+ </update>
+	<!-- 根据ID查询用户 -->
+	<select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+	    select <include refid="Base_Column_List" /> 
+	    from sp_novel where id=#{id}
+	</select>
+	<!-- 系统用户 列表总数-->
+	<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	   select count(1) from sp_novel
+	  
+	</select>
+	<!-- 查询系统用户列表 -->
+	<select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+	    select <include refid="Base_Column_List" /> 
+	from sp_novel <include refid="Example_Where_Clause" />
+	<if test="orderLimit!=null and orderLimit !=''">
+	     ${orderLimit}
+	  </if>
+	  <if test="queryLimit!=null and queryLimit !=''">
+	     ${queryLimit}
+	  </if>
+	</select>
+
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sum.cen.mapper.ContentMapper">
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="sum.cen.entity.Content" >
+	<result column="id" property="id"/>
+	<result column="novel_id" property="novel_id"/>
+	<result column="url" property="url"/>
+	<result column="content" property="content"/>
+</resultMap>
+
+<!-- sys_user table all fields -->
+ <sql id="Base_Column_List">
+  id,novel_id,url,content
+ </sql>
+
+<!-- 查询条件 -->	
+<sql id="Example_Where_Clause">
+	    where 1=1
+<trim suffixOverrides=",">
+    <if test="id !=null and id !=0" >
+      and id=#{id}
+    </if>
+   <if test="novel_id !=null and novel_id !=''">
+      and novel_id =#{novel_id}
+   </if>
+    <if test="url !=null" >
+      and url=#{url}
+    </if>
+   <if test="content !=null and content!=''">
+     and content=#{content}
+   </if>
+   </trim>	
+</sql>
+  <!-- 插入记录 -->
+  <insert id="add" parameterType="Object">
+ 
+  insert into sp_content(novel_id,url,content)
+ values(#{novel_id},#{url},#{content})
+</insert>
+<!-- 根据id，修改记录--> 
+<update id="update" parameterType="Object">
+     update sp_content set novel_id=#{novel_id},url=#{url},content=#{content} where id=#{id}
+</update>
+<!-- 删除用户 -->
+<delete id="delete" parameterType="Object">
+   delete from sp_content where id=#{id}
+</delete>
+ <!-- 修改记录，只修改只不为空的字段 -->
+ <update id="updateBySelective" parameterType="Object">
+    update sp_content set 
+	<trim  suffixOverrides="," >
+	<if test="novel_id != null  and novel_id != '' ">
+		novel_id=#{novel_id},
+	</if>
+	<if test="url != null  and url != '' ">
+		url=#{url},
+	</if>
+	<if test="content != null  and content != '' ">
+		content=#{content},
+	</if>
+	</trim>
+	 where id=#{id}
+ 
+ </update>
+	<!-- 根据ID查询用户 -->
+	<select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+	    select <include refid="Base_Column_List" /> 
+	    from sp_content where id=#{id}
+	</select>
+	<!-- 系统用户 列表总数-->
+	<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	   select count(1) from sp_content
+	   <include refid="Example_Where_Clause"/>
+	</select>
+	<!-- 查询系统用户列表 -->
+	<select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+	    select <include refid="Base_Column_List" />
+	from sp_content <include refid="Example_Where_Clause" />
+	<if test="orderLimit!=null and orderLimit !=''">
+	     ${orderLimit}
+	  </if>
+	  <if test="queryLimit!=null and queryLimit !=''">
+	     ${queryLimit}
+	  </if>
+	</select>
+<!-- 通过小说id删除所属章节 -->
+<delete id="deleteByNovelId" parameterType="Object">
+   delete from sp_content where novelId=#{novelId}
+
+</delete>
+<!-- 通过小说id查找小说章节数量-->
+<select id="queryByNovelId" resultType="java.lang.Integer"  parameterType="Object">
+   select count(1) from sp_content where novel_id=#{novel_id}
+
+</select>
+</mapper>
