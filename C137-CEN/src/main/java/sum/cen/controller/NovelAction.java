@@ -232,7 +232,7 @@ public class NovelAction extends BaseAction{
 		//
 		 StringBuffer  user_ip=request.getRequestURL(); //http://localhost:8090/novel/down.do
 		 String user_ip1=request.getRemoteAddr();
-		 if(I>0){ //本地数据库有章节内容
+		 if(I>0){ //本地数据库有章节内容qq
 			List<Content> list= contentService.queryContentByNovelId(novelId);
 			
 			   for(int i=0;i<list.size();i++){
