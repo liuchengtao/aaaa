@@ -24,16 +24,20 @@ public class Csdn implements PageProcessor {
     // process是定制爬虫逻辑的核心接口，在这里编写抽取逻辑
     public void process(Page page) {
         // 列表页
-    /*    if (!page.getUrl().regex("http://blog\\.csdn\\.net/" + username + "/article/details/\\d+").match()) {
+        if (!page.getUrl().regex("https://blog\\.csdn\\.net/" + username + "/article/details/\\d+").match()) {
+        	System.out.println(page.getUrl());
             // 添加所有文章页
             page.addTargetRequests(page.getHtml().xpath("//div[@id='article_list']").links()// 限定文章列表获取区域
                     .regex("/" + username + "/article/details/\\d+")
-                    .replace("/" + username + "/", "http://blog.csdn.net/" + username + "/")// 巧用替换给把相对url转换成绝对url
+                    .replace("/" + username + "/", "https://blog.csdn.net/" + username + "/")// 巧用替换给把相对url转换成绝对url
                     .all());
+            //https://blog.csdn.net/qq598535550/article/details/52014201
+            System.out.println("yes"+page.getHtml().xpath("//div[@id='article_list']").links()
+                    .regex("https://blog\\.csdn\\.net/" + username + "/article/details/\\d+"));
             // 添加其他列表页
             page.addTargetRequests(page.getHtml().xpath("//div[@id='papelist']").links()// 限定其他列表页获取区域
                     .regex("/" + username + "/article/list/\\d+")
-                    .replace("/" + username + "/", "http://blog.csdn.net/" + username + "/")// 巧用替换给把相对url转换成绝对url
+                    .replace("/" + username + "/", "https://blog.csdn.net/" + username + "/")// 巧用替换给把相对url转换成绝对url
                     .all());
             // 文章页
         } else {
@@ -41,9 +45,9 @@ public class Csdn implements PageProcessor {
             // 用CsdnBlog类来存抓取到的数据，方便存入数据库
           //  System System = new System();
             // 设置编号
-            
+                                       //https://blog.csdn.net/qq598535550/article/details/51287630
             System.out.println("uuid=="+
-                    page.getUrl().regex("http://blog\\.csdn\\.net/" + username + "/article/details/(\\d+)").get().toString()
+                    page.getUrl().regex("https://blog\\.csdn\\.net/" + username + "/article/details/(\\d+)").get().toString()
                     );
             // 设置标题
             System.out.println(
@@ -55,7 +59,7 @@ public class Csdn implements PageProcessor {
             System.out.println(page.getHtml()
                     .xpath("//div[@class='article_l']/span[@class='link_categories']/a/allText()").all().toString());
         
-        }*/
+        }
     }
 
     
@@ -65,7 +69,7 @@ public class Csdn implements PageProcessor {
         System.out.println("【爬虫开始】请耐心等待一大波数据到你碗里来...");
         startTime = System.currentTimeMillis();
         // 从用户博客首页开始抓，开启5个线程，启动爬虫
-        Spider.create(new Csdn()).addUrl("http://blog.csdn.net/" + username).thread(5).run();
+        Spider.create(new Csdn()).addUrl("https://blog.csdn.net/" + username).thread(5).run();
         endTime = System.currentTimeMillis();
         System.out.println("【爬虫结束】共抓取" + size + "篇文章，耗时约" + ((endTime - startTime) / 1000) + "秒，已保存到数据库，请查收！");
     }}

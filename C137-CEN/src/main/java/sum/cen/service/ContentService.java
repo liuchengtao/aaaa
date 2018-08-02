@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 
 
+
+import sum.cen.entity.Content;
 import sum.cen.entity.SysRoleRel;
 import sum.cen.entity.SysRoleRel.RelType;
 import sum.cen.entity.SysUser;
@@ -40,6 +42,10 @@ public class ContentService<T> extends BaseService<T>{
 	}
 	public int queryByNovelId(Object novelId){
       return   getMapper().queryByNovelId(novelId);
+		
+	}
+	public List<Content> queryContentByNovelId(Object novelId){
+		return getMapper().queryContentByNovelId(novelId);
 		
 	}
 	

@@ -158,7 +158,7 @@ public class SysMenuTest {
 	Response re=	cn.execute();
 		System.out.println(re.body());
 	 }
-	 @Test
+	// @Test
 	 public void testE() throws Exception{
 		// String url="https://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.19)";
 		 String url="https://weibo.com/";
@@ -170,5 +170,10 @@ public class SysMenuTest {
 			Response re=	cn.execute();
 			re.charset("gbk");
 			System.out.println(re.body());
+	 }
+	 @Test
+	 public void testSDD(){
+		 
+		 
 	 }
 }

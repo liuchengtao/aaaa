@@ -36,9 +36,7 @@ public class URLUtils {
 			else
 				accessUrls.add(menuUri+"/"+action);
 		}
-	//	for(String test:accessUrls){
-	//		System.out.println("accessUrls==="+test);
-	//	}
+	
 	}
 	
 	public static void main(String[] args) {

@@ -82,21 +82,7 @@ public class SysMenuAction extends BaseAction{
 	
 	@RequestMapping("/save")
 	public void save(SysMenu model,HttpServletRequest request,HttpServletResponse response) throws Exception{
-		//model.setBtns(null);
-		/*if(model.getId()==null){ //新增菜单
-			List<SysMenuBtn> btns=getReqBtns(request);
-			model.setBtns(btns);
-			model.setDeleted(0);
-			sysMenuService.add(model);
-			sendOkMessage(response,"新增菜单成功");
-			return ;
-		}
-		if(model.getParentId()==0){  //表单参数默认为零 手冻设置为null
-			model.setParentId(null);
-		}
-		sysMenuService.update(model);
-		sendOkMessage(response,"修改菜单成功");*/
-		//设置菜单按钮数据
+		       //设置菜单按钮数据
 				List<SysMenuBtn> btns = getReqBtns(request);
 				model.setBtns(btns);
 				if(model.getId() == null){

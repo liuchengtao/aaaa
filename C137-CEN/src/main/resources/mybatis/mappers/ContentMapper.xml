@@ -93,6 +93,9 @@
 <!-- 通过小说id查找小说章节数量-->
 <select id="queryByNovelId" resultType="java.lang.Integer"  parameterType="Object">
    select count(1) from sp_content where novel_id=#{novel_id}
-
+</select>
+<!-- 通过小说id查找该小说对应章节 -->
+<select id="queryContentByNovelId" resultMap="BaseResultMap" parameterType="Object">
+   select * from  sp_content where novel_id=#{novel_id}
 </select>
 </mapper>

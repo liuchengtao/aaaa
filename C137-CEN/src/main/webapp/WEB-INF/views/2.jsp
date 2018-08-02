@@ -117,7 +117,7 @@ function echartsCloud(){
     </div>
     <div class="result-list" id="list">
          <div class="result-item result-game-item">
-
+         <c:if test="${novel!=null}">
             <div class="result-game-item-pic">
               <c:if test="${novel.id>0}">
                 <img alt="暂无图片" src=" ${novel.pic}">
@@ -127,9 +127,9 @@ function echartsCloud(){
                 <h3 class="result-item-title result-game-item-title">
                     ${novel.name}
                 </h3>
-                <p class="result-game-item-desc">${novel.abstract_n}</p>
-                <div class="result-game-item-info">
-
+            
+                <p class="result-game-item-desc">${novel.message}</p>
+</div>
                     <p class="result-game-item-info-tag">
                         <span class="result-game-item-info-tag-title preBold"></span>
                         <span>
@@ -137,20 +137,15 @@ function echartsCloud(){
                         </span>
                     </p>
                     <p class="result-game-item-info-tag">
-                    <c:if test="${novel.id>0}">
-                        <span class="result-game-item-info-tag-title preBold">类型：</span>
-                        </c:if>
+                   
                         <span class="result-game-item-info-tag-title">${novel.tag}</span>
                     </p>
 
-                    <p class="result-game-item-info-tag">
-                        <span class="result-game-item-info-tag-title preBold"></span>
-                        <span class="result-game-item-info-tag-title">${novel.last_time}</span>
-                    </p>
-
+                
+</c:if>
                     <p class="result-game-item-info-tag">
                         <c:if test="${novel.id>0}">
-    <a href="newDown?action=downNovel&novelId=${novel.id}&novelName=${novel.name}">
+    <a href="down.do?novelId=${novel.id}&novelName=${novel.name}">
                              下载</a>
     </c:if>
      <c:if test="${novel.id==0}">
@@ -166,7 +161,7 @@ function echartsCloud(){
     </div>
     <div class="search-result-page">
         <div class="search-result-page-main">
-                        
+                        ${novel.message}
         </div>
     </div>
 <script type="text/javascript">

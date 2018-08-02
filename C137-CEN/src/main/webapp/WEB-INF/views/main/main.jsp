@@ -15,7 +15,7 @@
  	<h1>YiYa Manager</h1>
  	<div  class="ui-login">
  		<div class="ui-login-info">
-	 		欢迎 <span class="orange">${user1.nickName}</span> 第[<span class="orange">${user1.loginCount}</span>]次登录系统 
+	 		欢迎 <span class="orange">${session_user.nickName}</span> 第[<span class="orange">${session_user.loginCount}</span>]次登录系统 
 	 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	 		<a class="modify-pwd-btn"  href="javascript:void(0);">修改密码</a> |
  			<a class="logout-btn" href="/logout.shtml">退出</a>

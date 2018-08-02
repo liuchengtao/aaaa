@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
+encoding//src/main/java/sum/cen/annotation/Auth.java=UTF-8
 encoding//src/main/java/sum/cen/entity/SysMenu.java=UTF-8
 encoding//src/main/java/sum/cen/entity/SysMenuBtn.java=UTF-8
 encoding//src/main/java/sum/cen/entity/SysRoleRel.java=UTF-8
+encoding//src/main/java/sum/cen/util/URLUtils.java=UTF-8
 encoding//src/main/webapp/views/login.jsp=UTF-8

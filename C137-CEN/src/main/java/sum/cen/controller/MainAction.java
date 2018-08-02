@@ -40,6 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
 import sum.cen.annotation.Auth;
 import sum.cen.entity.SysMenu;
 import sum.cen.entity.SysMenuBtn;
@@ -121,9 +122,16 @@ public class MainAction extends BaseAction{
 		}
 		//设置User到Session 
 		SessionUtil.setUser(request, user);
-		//request.getSession().setAttribute("user1",user);
+		
 		//登录成功
 		//TODO 
+		int loginCount=0;
+		if(user.getLoginCount()!=null){
+			loginCount=user.getLoginCount();
+		}
+		user.setLoginCount(loginCount+1);
+		user.setLoginTime(new java.sql.Timestamp(System.currentTimeMillis()));
+		sysUserService.update(user);
 		this.sendOkMessage(response, "login ok");
 	  }
 	  @Auth(verifyLogin=false,verifyURL=false)
@@ -143,7 +151,6 @@ public class MainAction extends BaseAction{
 	  @Auth(verifyURL=false)
 	  @RequestMapping("/getActionBtn")
 	  public void getActionBtn(String url,HttpServletRequest request,HttpServletResponse response) throws Exception{
-		//  Map<String, Object> result = new HashMap<String, Object>();
 		  JSONObject result=new JSONObject();
 			List<String> actionTypes = new ArrayList<String>();
 			//判断是否超级管理员
@@ -160,8 +167,8 @@ public class MainAction extends BaseAction{
 			}
 			result.put("success", true);
 			 writeJson(result, response);
-			//HtmlUtil.writerJson(response, result);
 	  }
+	  
 	  /**
 	   * 主页面
 	   * @param request
@@ -225,7 +232,7 @@ public class MainAction extends BaseAction{
 					for(String test:accessUrls){
 								System.out.println("accessUrls-btn==="+test);
 							}
-					menuBtnMap.put(menu.getUrl(), btnTypes);
+					menuBtnMap.put(menu.getUrl(),btnTypes  );
 					//菜单的action dataList.do|/sysMenu/getMenuTree.do
 					URLUtils.getBtnAccessUrls(menu.getUrl(), menu.getActions(),accessUrls);
 					for(String test:accessUrls){

@@ -50,11 +50,34 @@ public class SysMenuService<T> extends BaseService<T> {
 	public List<T> queryChildMenuByUserId(Object userId){
 		return mapper.queryChildMenuByUserId(userId);
 	}
+	public void saveBtns(int menuId,List<SysMenuBtn> btns){
+		if(btns==null|| btns.isEmpty()){  //?
+			return ;
+		}
+		for(SysMenuBtn btn :btns){
+			if(btn.getId()!=null&&btn.getDeleteFlag().equals("1")){
+				sysMenuBtnService.delete(btn.getId());
+				continue;
+			}
+			btn.setMenuid(menuId);
+			if(btn.getId()==null){
+				sysMenuBtnService.add(btn);
+			}else{
+				sysMenuBtnService.update(btn);
+			}
+			
+		}
+		
+	}
+	
+	public void add(SysMenu menu){
+		super.add((T) menu);
+		saveBtns(menu.getId(),menu.getBtns());
+	}
 	@Override
 	public void delete(Object id)  {
-		super.delete(id);
-		//删除关联关系
-		
+		    super.delete(id);
+		   //删除关联关系
 			sysRoleRelService.deleteByObjId((Integer)id, RelType.MENU.key);
 			sysMenuBtnService.deleteByMenuid((Integer)id);
 		
